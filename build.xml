@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hedera" default="help">
+	<description>Build Hedera</description>
+
+	<property name="lib.compile.dir" value="lib/compile" />
+	<property name="lib.runtime.dir" value="lib/runtime" />
+	<property name="lib.util.dir" value="lib/util" />
+
+	<property name="src.dir" value="src/main" />
+	<property name="src.java.dir" value="${src.dir}/java" />
+
+	<property name="build.dir" value="build" />
+	<property name="dist.dir" value="dist" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="init">
+
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.compile.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="dist" depends="clean,init" description="build the distributable">
+		<copy todir="${build.dir}">
+			<fileset dir="${src.java.dir}">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+
+		<javac srcdir="${src.java.dir}" destdir="${build.dir}" classpathref="compile.classpath" debug="on" includeantruntime="false" compiler="javac1.5" />
+
+		<jar destfile="${dist.dir}/${ant.project.name}.jar">
+			<fileset dir="${build.dir}">
+				<include name="**/*.*" />
+			</fileset>
+			<zipgroupfileset dir="${lib.compile.dir}" includes="JSON-java.jar" />
+		</jar>
+
+	</target>
+
+
+	<target name="help" description="print out a help message">
+		<echo>
+type:
+	ant -p
+
+for a complete list of targets
+		</echo>
+	</target>
+
+</project>

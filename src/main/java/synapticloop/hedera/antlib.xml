@@ -1,0 +1,4 @@
+<antlib xmlns:antcontrib="antlib:hedera">
+	<typedef name="github-release-list" classname="synapticloop.hedera.github.GithubReleaseListTask" />
+	<typedef name="github-release" classname="synapticloop.hedera.github.GithubReleaseTask" />
+</antlib>
